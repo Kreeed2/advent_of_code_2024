@@ -9,20 +9,14 @@
         "ghcr.io/devcontainers/features/powershell:1": {
             "version": "latest"
         },
-        "ghcr.io/azure/azure-dev/azd:0": {
-            "version": "latest"
-        },
         "ghcr.io/devcontainers/features/common-utils:2": {},
         "ghcr.io/devcontainers/features/dotnet:2": {
-            "version": "none",
-            "dotnetRuntimeVersions": "7.0",
-            "aspNetCoreRuntimeVersions": "7.0"
+            "version": "latest"
         }
     },
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-vscode.vscode-node-azure-pack",
                 "GitHub.copilot",
                 "GitHub.vscode-github-actions",
                 "ms-dotnettools.vscode-dotnet-runtime",
@@ -31,27 +25,13 @@
             ]
         }
     },
-    "forwardPorts": [
-        8080,
-        8081
-    ],
-    "postCreateCommand": "cd ./SampleApp && dotnet restore",
+    "postCreateCommand": "dotnet restore",
     "hostRequirements": {
-        "memory": "8gb",
-        "cpus": 4
+        "memory": "2gb",
+        "cpus": 1
     },
     "remoteEnv": {
         "DOTNET_MULTILEVEL_LOOKUP": "0",
         "TARGET": "net8.0"
-    },
-    "portsAttributes": {
-        "8080": {
-            "label": "Weather API",
-            "onAutoForward": "notify"
-        },
-        "8081": {
-            "label": "Weather Front End",
-            "onAutoForward": "notify"
-        }
     }
 }

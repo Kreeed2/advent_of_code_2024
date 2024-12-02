@@ -5,7 +5,7 @@ using HelperLibrary;
 //foreach (var line in prompt)
 //    Console.WriteLine(line);
 
-var input = FileReader.ReadFile(@".\input.txt");
+var input = FileReader.ReadFile(@"Input.txt");
 
 var solution = new Part_01().Solve(input);
 
