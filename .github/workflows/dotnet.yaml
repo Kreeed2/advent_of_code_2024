@@ -1,5 +1,8 @@
 name: .NET Build and Test
 
+env:
+  TARGET: "net8.0"
+
 on:
   push:
     branches: [ main ]
