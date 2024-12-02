@@ -16,9 +16,9 @@ namespace Day_01
 
             foreach (var line in pInput)
             {
-                var splits = FileReader.SplitLineIntoNumbers(line);
-                list1.Add(splits.Item1);
-                list2.Add(splits.Item2);
+                var splits = FileReader.SplitLineIntoNumbers<int>(line)?.ToArray() ?? Array.Empty<int>();
+                list1.Add(splits[0]);
+                list2.Add(splits[1]);
             }
 
             list1.Sort();

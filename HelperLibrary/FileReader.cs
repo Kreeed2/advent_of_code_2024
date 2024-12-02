@@ -1,4 +1,6 @@
-﻿namespace HelperLibrary
+﻿using System.Collections;
+
+namespace HelperLibrary
 {
     public class FileReader
     {
@@ -22,10 +24,15 @@
             return File.ReadAllLines(Path.Join(cPath, pFileName));
         }
 
-        public static (int, int) SplitLineIntoNumbers(string pLine)
+        public static IEnumerable<T> SplitLineIntoNumbers<T>(string pLine)
         {
             var splits = pLine.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.RemoveEmptyEntries);
-            return (Convert.ToInt32(splits[0]), Convert.ToInt32(splits[1]));
+            return Type.GetTypeCode(typeof(T)) switch
+            {
+                TypeCode.String => (IEnumerable<T>)splits.AsEnumerable(),
+                TypeCode.Int32 => (IEnumerable<T>)splits.Select(item => Convert.ToInt32(item)),
+                _ => throw new NotImplementedException(),
+            };
         }
     }
 }
