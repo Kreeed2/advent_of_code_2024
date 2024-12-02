@@ -17,47 +17,35 @@ namespace Day_02
             var count = 0;
             foreach (var line in pInput)
             {
+                var splits = FileReader.SplitLineIntoNumbers<int>(line)?.ToArray() ?? [];
 
-                var splits = FileReader.SplitLineIntoNumbers<int>(line)?.ToArray() ?? Array.Empty<int>();
-
-                if (IsSafe(splits))
+                if (IsSafe(splits) == -1)
                     count++;
             }
             return count;
         }
 
-        private static bool IsSafe(IEnumerable<int> pInput)
+        /// <summary>
+        /// Determines if the sequence of levels in the input array is safe.
+        /// </summary>
+        /// <param name="pInput">An array of integers representing the levels.</param>
+        /// <returns>
+        /// The index of the first level that violates the safety rules, or -1 if all levels are safe.
+        /// </returns>
+        /// <remarks>
+        /// The safety rules are:
+        /// 1. Any two adjacent levels differ by at least one and at most three.
+        /// 2. The levels are either all increasing or all decreasing.
+        /// </remarks>
+        public static int IsSafe(int[] pInput)
         {
-            var enumerator = pInput.GetEnumerator();
-
-            bool? isDecreasing = null;
-            
-            enumerator.MoveNext();
-            int previous = enumerator.Current;
-            while (enumerator.MoveNext())
+            for (int i = 1; i < pInput.Length; i++)
             {
-                // Any two adjacent levels differ by at least one and at most three.
-                // The levels are either all increasing or all decreasing.
-                if (!isDecreasing.HasValue)
-                {
-                    isDecreasing = previous > enumerator.Current;
-                }
-
-                var validMove = (isDecreasing.Value 
-                    ? (previous - enumerator.Current) 
-                    : (enumerator.Current - previous))
-                switch
-                {
-                    >= MIN_DIFFERENCE and <= MAX_DIFFERENCE => true,
-                    _ => false,
-                };
-
-                previous = enumerator.Current;
-
-                if (!validMove)
-                    return false;
+                var difference = Math.Abs(pInput[i] - pInput[i - 1]);
+                if (!(difference >= MIN_DIFFERENCE && difference <= MAX_DIFFERENCE))
+                    return i-1;
             }
-            return true;
+            return -1;
         }
     }
 }

@@ -17,9 +17,9 @@ namespace Day_02
             var count = 0;
             foreach (var line in pInput)
             {
-                var splits = FileReader.SplitLineIntoNumbers<int>(line)?.ToArray() ?? Array.Empty<int>();
+                var splits = FileReader.SplitLineIntoNumbers<int>(line)?.ToArray() ?? [];
 
-                var result = IsSafe(splits);
+                var result = Part_01.IsSafe(splits);
                 if (result == -1)
                     count++;
                 else
@@ -44,36 +44,7 @@ namespace Day_02
             var tmp = new List<int>(pInput);
             tmp.RemoveAt(pIndex);
 
-            return IsSafe(tmp.ToArray());
-        }
-
-        private static int IsSafe(int[] pInput)
-        {
-            bool? isDecreasing = null;
-
-            for (int i = 1; i < pInput.Length; i++)
-            {
-                // Any two adjacent levels differ by at least one and at most three.
-                // The levels are either all increasing or all decreasing.
-                if (!isDecreasing.HasValue)
-                {
-                    isDecreasing = pInput[i-1] > pInput[i];
-                }
-
-                var validMove = (isDecreasing.Value
-                    ? (pInput[i-1] - pInput[i])
-                    : (pInput[i] - pInput[i-1]))
-                switch
-                {
-                    >= MIN_DIFFERENCE and <= MAX_DIFFERENCE => true,
-                    _ => false,
-                };
-
-                // The report is not safe and we stop here
-                if (!validMove)
-                    return i-1;
-            }
-            return -1;
+            return Part_01.IsSafe([.. tmp]);
         }
     }
 }
