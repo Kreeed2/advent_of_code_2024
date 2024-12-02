@@ -39,8 +39,17 @@ namespace Day_02
         /// </remarks>
         public static int IsSafe(int[] pInput)
         {
+            bool? isIncreasing = null;
             for (int i = 1; i < pInput.Length; i++)
             {
+                if (!isIncreasing.HasValue)
+                    isIncreasing = pInput[i] > pInput[i - 1];
+                else {
+                    if (isIncreasing.Value && pInput[i] < pInput[i - 1] 
+                        || !isIncreasing.Value && pInput[i] > pInput[i - 1])
+                        return i-1;
+                }
+                
                 var difference = Math.Abs(pInput[i] - pInput[i - 1]);
                 if (!(difference >= MIN_DIFFERENCE && difference <= MAX_DIFFERENCE))
                     return i-1;
