@@ -24,7 +24,7 @@ namespace HelperLibrary
             return File.ReadAllLines(Path.Join(cPath, pFileName));
         }
 
-        public static IEnumerable<T> SplitLineIntoNumbers<T>(string pLine)
+        public static IEnumerable<T> SplitBySpace<T>(string pLine)
         {
             var splits = pLine.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.RemoveEmptyEntries);
             return Type.GetTypeCode(typeof(T)) switch

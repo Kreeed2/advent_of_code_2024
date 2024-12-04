@@ -17,7 +17,7 @@ namespace Day_02
             var count = 0;
             foreach (var line in pInput)
             {
-                var splits = FileReader.SplitLineIntoNumbers<int>(line)?.ToArray() ?? [];
+                var splits = FileReader.SplitBySpace<int>(line)?.ToArray() ?? [];
 
                 var result = Part_01.IsSafe(splits);
                 if (result == -1)
