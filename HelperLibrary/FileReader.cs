@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 
 namespace HelperLibrary
 {
@@ -24,15 +25,27 @@ namespace HelperLibrary
             return File.ReadAllLines(Path.Join(cPath, pFileName));
         }
 
-        public static IEnumerable<T> SplitBySpace<T>(string pLine)
-        {
-            var splits = pLine.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.RemoveEmptyEntries);
+        public static IEnumerable<T> SplitBySpace<T>(string pLine) => SplitBy<T>(' ')(pLine);
+
+        public static IEnumerable<T> SplitByComma<T>(string pLine) => SplitBy<T>(',')(pLine);
+
+        public static IEnumerable<T> SplitByPipe<T>(string pLine) => SplitBy<T>('|')(pLine);
+
+        private static Func<string, IEnumerable<T>> SplitBy<T>(char pSeperator) => 
+        pLine => {
+            var splits = pLine.Split(pSeperator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.RemoveEmptyEntries);
             return Type.GetTypeCode(typeof(T)) switch
             {
                 TypeCode.String => (IEnumerable<T>)splits.AsEnumerable(),
                 TypeCode.Int32 => (IEnumerable<T>)splits.Select(item => Convert.ToInt32(item)),
                 _ => throw new NotImplementedException(),
             };
-        }
+        };
+
+
+    }
+
+    public static class FileReaderExtenstions {
+        public static IEnumerable<IEnumerable<T>> SplitByPipe<T>(this IEnumerable<string> pLines) => pLines.Select(FileReader.SplitByPipe<T>);
     }
 }
