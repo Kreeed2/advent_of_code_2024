@@ -4,18 +4,6 @@ using HelperLibrary;
 
 namespace Day_04
 {
-    public enum Direction
-    {
-        North,
-        NorthEast,
-        East,
-        SouthEast,
-        South,
-        SouthWest,
-        West,
-        NorthWest,
-    }
-
     public class Part_01 : IDay
     {
         private int mLineLength;
