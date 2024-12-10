@@ -6,7 +6,7 @@ namespace Day_06;
 
 public class Part_02 : IDay
 {
-    public int Solve(string[] pInput)
+    public long Solve(string[] pInput)
     {
         var map = new Map(pInput);
 

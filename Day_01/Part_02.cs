@@ -9,7 +9,7 @@ namespace Day_01
 {
     public class Part_02 : IDay
     {
-        public int Solve(string[] pInput)
+        public long Solve(string[] pInput)
         {
             var list1 = new List<int>();
             var list2 = new List<int>();

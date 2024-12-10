@@ -2,6 +2,6 @@
 {
     public interface IDay
     {
-        int Solve(string[] pInput);
+        long Solve(string[] pInput);
     }
 }

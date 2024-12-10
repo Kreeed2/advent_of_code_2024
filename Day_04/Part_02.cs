@@ -9,7 +9,7 @@ namespace Day_04
         private int mLineLength;
         public int[] mDirectionStepLength = new int[8];
 
-        public int Solve(string[] pInput)
+        public long Solve(string[] pInput)
         {
             Initialize(pInput);
 

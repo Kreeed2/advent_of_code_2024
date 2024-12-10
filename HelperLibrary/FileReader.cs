@@ -29,6 +29,8 @@ namespace HelperLibrary
 
         public static IEnumerable<T> SplitByComma<T>(string pLine) => SplitBy<T>(',')(pLine);
 
+        public static IEnumerable<T> SplitByColon<T>(string pLine) => SplitBy<T>(':')(pLine);
+
         public static IEnumerable<T> SplitByPipe<T>(string pLine) => SplitBy<T>('|')(pLine);
 
         private static Func<string, IEnumerable<T>> SplitBy<T>(char pSeperator) => 
@@ -38,6 +40,7 @@ namespace HelperLibrary
             {
                 TypeCode.String => (IEnumerable<T>)splits.AsEnumerable(),
                 TypeCode.Int32 => (IEnumerable<T>)splits.Select(item => Convert.ToInt32(item)),
+                TypeCode.Int64 => (IEnumerable<T>)splits.Select(item => Convert.ToInt64(item)),
                 _ => throw new NotImplementedException(),
             };
         };

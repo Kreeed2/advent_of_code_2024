@@ -5,7 +5,7 @@ namespace Day_05
 {
     public class Part_01 : IDay
     {
-        public int Solve(string[] pInput)
+        public long Solve(string[] pInput)
         {
             // Speperate the page ordering rules
             var pageOrderingRules = ParseRules(pInput);

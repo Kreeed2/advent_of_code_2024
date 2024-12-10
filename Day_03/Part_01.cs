@@ -3,7 +3,7 @@ using HelperLibrary;
 
 namespace Day_03 {
     public class Part_01 : IDay {
-        public int Solve(string[] pInput) {
+        public long Solve(string[] pInput) {
             var regex = new Regex(@"mul\(\d{1,3},\d{1,3}\)", RegexOptions.Multiline | RegexOptions.Compiled);
 
             var tmp = pInput.Select(

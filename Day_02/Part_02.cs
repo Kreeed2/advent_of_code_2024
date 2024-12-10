@@ -12,7 +12,7 @@ namespace Day_02
         const int MIN_DIFFERENCE = 1;
         const int MAX_DIFFERENCE = 3;
 
-        public int Solve(string[] pInput)
+        public long Solve(string[] pInput)
         {
             var count = 0;
             foreach (var line in pInput)
