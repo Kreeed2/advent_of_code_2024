@@ -132,3 +132,8 @@ $RECYCLE.BIN/
 
 _NCrunch*
 .vs/*
+
+# =========================
+# Advent of Code 
+# =========================
+**/Input.txt
