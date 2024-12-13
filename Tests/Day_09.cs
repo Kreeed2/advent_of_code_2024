@@ -25,6 +25,14 @@ public class TestDay_09
         Assert.That(result, Is.EqualTo(1928));
     }
 
+    [Test]
+    public void Part_2_Result()
+    {
+        var result = new Part_02().Solve(input);
+
+        Assert.That(result, Is.EqualTo(2858));
+    }
+
     #region Tests for the checksum calculation
 
     [Test]
