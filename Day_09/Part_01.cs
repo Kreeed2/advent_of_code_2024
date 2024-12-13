@@ -9,33 +9,33 @@ public class Part_01 : IDay
     public long Solve(string[] pInput)
     {
         // The input is just a single line of numbers
-        var input = pInput[0].ToCharArray();
+        var input = pInput[0].SplitIntoCharacters();
 
-        var diskMap = CreateDiskMap(input).ToCharArray();
+        Console.WriteLine($"The input is {input.Length} characters long.");
 
-        Debug.WriteLine(diskMap);
+        var diskMap = CreateDiskMap(input);
+
         for (int i = diskMap.Length - 1; i >= 0; i--)
         {
             var index = FillDiskMap(diskMap, i);
-            Debug.WriteLine(diskMap);
             if (index == -1)
             {
+                Console.WriteLine($"Solve - The disk map is full at index {i}");
                 break;
             }           
         }
 
-        Console.WriteLine(diskMap);
-
         return CalulateChecksum(diskMap);
     }
 
-    private static long CalulateChecksum(char[] pDiskMap)
+    public static long CalulateChecksum(string[] pDiskMap)
     {
         long checksum = 0;
         for (int i = 0; i < pDiskMap.Length; i++)
         {
-            if (pDiskMap[i] == '.')
+            if (pDiskMap[i] == ".")
             {
+                Console.WriteLine($"CalulateChecksum - The disk map is full at index {i}");
                 break;
             }
 
@@ -45,25 +45,25 @@ public class Part_01 : IDay
         return checksum;
     }
 
-    private static int FillDiskMap(char[] pDiskMap, int pLast) {
+    public static int FillDiskMap(string[] pDiskMap, int pLast) {
         
         // Find the first index of a .
         // If the index is past the last character, return -1
-        int freeSpace = Array.IndexOf(pDiskMap, '.');
-        if (freeSpace == -1 || freeSpace > pLast) {
+        int freeSpace = Array.IndexOf(pDiskMap, ".");
+        if (freeSpace == -1 || freeSpace >= pLast) {
             return -1;
         }
 
         // Fill the free space with the number at the end of the disk map
         pDiskMap[freeSpace] = pDiskMap[pLast];
-        pDiskMap[pLast] = '.';
+        pDiskMap[pLast] = ".";
 
         return freeSpace;
     }
 
-    private static string CreateDiskMap(char[] input)
+    public static string[] CreateDiskMap(string[] input)
     {
-        var diskMap = new StringBuilder();
+        var diskMap = new List<string>();
 
         long index = 0;
         // Expand the disk map from the input
@@ -80,9 +80,9 @@ public class Part_01 : IDay
                 c = ".";
             }
 
-            diskMap.Append(string.Concat(Enumerable.Repeat(c, int.Parse(input[pos].ToString()))));
+            diskMap.AddRange(Enumerable.Repeat(c, int.Parse(input[pos].ToString())));
         }
 
-        return diskMap.ToString();
+        return diskMap.ToArray();
     }
 }

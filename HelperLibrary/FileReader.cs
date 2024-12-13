@@ -50,5 +50,7 @@ namespace HelperLibrary
 
     public static class FileReaderExtenstions {
         public static IEnumerable<IEnumerable<T>> SplitByPipe<T>(this IEnumerable<string> pLines) => pLines.Select(FileReader.SplitByPipe<T>);
+
+        public static string[] SplitIntoCharacters(this string pLine) => pLine.ToCharArray().Select(c => c.ToString()).ToArray();
     }
 }
