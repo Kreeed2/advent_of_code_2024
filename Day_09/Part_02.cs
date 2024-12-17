@@ -13,63 +13,71 @@ public class Part_02 : IDay
 
         var diskMap = Part_01.CreateDiskMap(input);
 
-        for (int i = diskMap.Length - 1; i >= 0; i--)
+        for (int i = diskMap.Length - 1; i >= 0;)
         {
             // Skip the empty spaces
             if (diskMap[i] == ".")
+            {
+                i--;
                 continue;
+            }
 
             var index = FillDiskMap(diskMap, i);
-            if (index == -1)
-            {
-                Console.WriteLine($"Solve - The disk map is full at index {i}");
-                break;
-            }           
+            i -= index;
         }
 
-        return Part_01.CalulateChecksum(diskMap);
+        return CalulateChecksum(diskMap);
+    }
+
+    public static long CalulateChecksum(string[] pDiskMap)
+    {
+        long checksum = 0;
+        for (int i = 0; i < pDiskMap.Length; i++)
+        {
+            if (pDiskMap[i] == ".")
+            {
+                continue;
+            }
+
+            checksum += int.Parse(pDiskMap[i].ToString()) * i;
+        }
+
+        return checksum;
     }
 
     public static int FillDiskMap(string[] pDiskMap, int pLast) {
-        
-        // Find the first index of a .
-        // If the index is past the last character, return -1
-        int freeSpace = Array.IndexOf(pDiskMap, ".");
-        if (freeSpace == -1 || freeSpace >= pLast) {
-            return -1;
-        }
 
-        // Get size of the free space on the disk
-        int freeSpaceSize = GetSizeOfFreeSpace(pDiskMap, ".", freeSpace);
+        // Get the size of the last file
+        int fileSize = GetSizeOfFile(pDiskMap, pDiskMap[pLast], pLast);
 
-        int fileSize = 0;
-        // Find a file that is the same size or smaller as the free space
-        for (int i = pLast; i >= 0; i--) {
-            // Skip the empty spaces
+        // Go through the disk map and try to find a free space for that file
+        for (int i = 0; i < pLast; i++)
+        {
             if (pDiskMap[i] == ".")
-                continue;
-
-            fileSize = GetSizeOfFile(pDiskMap, pDiskMap[i], i);
-            if (fileSize <= freeSpaceSize) {
-                pLast = i;
-                break;
+            {
+                var freeSpace = GetSizeOfFreeSpace(pDiskMap, i);
+                // Check if the file fits in the free space
+                if (fileSize <= freeSpace)
+                {
+                    // Move the file to the free space
+                    for (int j = 0; j < fileSize; j++)
+                    {
+                        pDiskMap[i + j] = pDiskMap[pLast - j];
+                        pDiskMap[pLast - j] = ".";
+                    }
+                    break;
+                }
+                i += freeSpace;
             }
-            i -= fileSize;
         }
-
-        // Move the file to the free space
-        for (int i = 0; i < fileSize; i++) {
-            pDiskMap[freeSpace + i] = pDiskMap[pLast - i];
-            pDiskMap[pLast - i] = ".";
-        }
-
-        return freeSpace;
+        return fileSize;
     }
 
-    public static int GetSizeOfFreeSpace(string[] pDiskMap, string pId, int pStartIndex) {
+    public static int GetSizeOfFreeSpace(string[] pDiskMap, int pStartIndex)
+    {
         int size = 0;
         for (int i = pStartIndex; i < pDiskMap.Length; i++) {
-            if (pDiskMap[i] == pId) {
+            if (pDiskMap[i] == ".") {
                 size++;
             } else {
                 break;
